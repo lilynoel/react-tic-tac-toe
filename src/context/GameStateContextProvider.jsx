@@ -1,6 +1,5 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 export const GameStateContext = createContext(null);
-
 
 // Allows any children components to access global game state, including loading state.
 // access board from within the board component, or cell component, or game component.
@@ -13,6 +12,9 @@ const GameStateContextProvider = ({ children }) => {
     draw: null,
   };
   const [gameState, setGameState] = useState(initialState);
+  useEffect(() => {
+    console.log("game state changed!");
+  }, [gameState]);
   return (
     <GameStateContext.Provider
       value={{ isLoading, setIsLoading, gameState, setGameState }}

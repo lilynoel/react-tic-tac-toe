@@ -18,3 +18,38 @@ export async function fetchGameState() {
     draw: Boolean(values[3]),
   };
 }
+
+export async function saveGameState(gameState) {
+  try {
+    const response = await client
+      .upsertLanguageVariant()
+      .byItemCodename("game_1")
+      .byLanguageCodename("default")
+      .withData((builder) => {
+        return {
+          elements: [
+            builder.textElement({
+              element: { codename: "board" },
+              value: JSON.stringify(gameState.board),
+            }),
+            builder.textElement({
+              element: { codename: "current_player" },
+              value: gameState.currentPlayer,
+            }),
+            builder.textElement({
+              element: { codename: "winner" },
+              value: gameState.winner,
+            }),
+            builder.textElement({
+              element: { codename: "draw" },
+              value: String(gameState.draw),
+            }),
+          ],
+        };
+      })
+      .toPromise();
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
+}
