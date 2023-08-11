@@ -53,3 +53,38 @@ export async function saveGameState(gameState) {
     console.log(e);
   }
 }
+
+export async function resetGameState() {
+  try {
+    const response = await client
+      .upsertLanguageVariant()
+      .byItemCodename("game_1")
+      .byLanguageCodename("default")
+      .withData((builder) => {
+        return {
+          elements: [
+            builder.textElement({
+              element: { codename: "board" },
+              value: JSON.stringify(["", "", "", "", "", "", "", "", ""]),
+            }),
+            builder.textElement({
+              element: { codename: "current_player" },
+              value: "X",
+            }),
+            builder.textElement({
+              element: { codename: "winner" },
+              value: "",
+            }),
+            builder.textElement({
+              element: { codename: "draw" },
+              value: "false",
+            }),
+          ],
+        };
+      })
+      .toPromise();
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+  }
+}

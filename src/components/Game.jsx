@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { fetchGameState } from "../utilities/kontent-utils";
 import Board from "./Board";
 import SaveButton from "./SaveButton";
+import ResetButton from "./ResetButton";
 import { GameStateContext } from "../context/GameStateContextProvider";
 
 const Game = () => {
@@ -33,6 +34,7 @@ const Game = () => {
           )}
           <Board currentPlayer={currentPlayer} winner={winner} />
           <SaveButton />
+          <ResetButton />
         </main>
       )}
     </>
