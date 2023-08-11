@@ -4,7 +4,7 @@ import client from "../config/client";
 export async function fetchGameState() {
   const response = await client
     .viewLanguageVariant()
-    .byItemCodename("game_1")
+    .byItemCodename("current_game")
     .byLanguageCodename("default")
     .toPromise();
   const values = response.data.elements.map((item) => {
@@ -23,7 +23,7 @@ export async function saveGameState(gameState) {
   try {
     const response = await client
       .upsertLanguageVariant()
-      .byItemCodename("game_1")
+      .byItemCodename("current_game")
       .byLanguageCodename("default")
       .withData((builder) => {
         return {
@@ -58,7 +58,7 @@ export async function resetGameState() {
   try {
     const response = await client
       .upsertLanguageVariant()
-      .byItemCodename("game_1")
+      .byItemCodename("current_game")
       .byLanguageCodename("default")
       .withData((builder) => {
         return {
